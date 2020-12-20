@@ -70,10 +70,12 @@ function buildCharts(sample) {
   var firstinarray = sampledata[0];
 
     // 6. Create variables that have arrays for otu_ids, otu_labels, and sample_values. AT
+    // adding in washing frequency
   var otu_ids = firstinarray.otu_ids;
   var otu_labels = firstinarray.otu_labels;
   var sample_values = firstinarray.sample_values;
-
+  var frequency = parseFloat(firstinarray.wfreq);
+  console.log(frequency);
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
@@ -99,8 +101,8 @@ function buildCharts(sample) {
     };
     // 10. Use Plotly.newpPlot() to plot the data with the layout. AT
     Plotly.newPlot("bar", barData, barLayout);
-  });
 
+// Bubble Chart------------------ 
 // 1. Create the trace for the bubble chart.
    var bubbleData = [{
       x: otu_ids,
@@ -126,9 +128,53 @@ function buildCharts(sample) {
 };
 
 // 3. Use Plotly to plot the data with the layout.
-Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+   Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
+// Gauge Chart ----------------
+// 4. Create the trace for the gauge chart.
+   var gaugeData = [ 
+      {
+      value: frequency,
+      type: "indicator",
+      mode: "gauge+number",
+      //title: "Belly Button Washing Frequency",
+      title: { text: "Belly Button Washing Frequency"},
+      // subtitle: "Scrubs per Week",
+      gauge: {
+        axis: { range: [null, 10] },
+        bar: { color: "black" },
+        steps: [
+          { range: [0, 2], color: "red"},
+          { range: [2, 4], color: "orange"},
+          { range: [4, 6], color: "yellow"},
+          { range: [6, 8], color: "lime"},
+          { range: [8, 10], color: "green"}],        
+        threshold: {
+          value: 10
+        }
 
+      }
+    }];
+
+// 5. Create the layout for the gauge chart.
+   var gaugeLayout = { 
+      xaxis: {
+        tickmode: "linear",
+        tick0: 0,
+        dtick: 2
+      },
+      width: 450,
+      height: 600,
+      annotations: [{
+        text: "Scrubs per Week",
+        showarrow: false
+      }],
+      font: { color: "black"}
+ 
+   };
+
+// 6. Use Plotly to plot the gauge data and layout.
+Plotly.newPlot("gauge", gaugeData, gaugeLayout);
+
+});
 }
-
-
