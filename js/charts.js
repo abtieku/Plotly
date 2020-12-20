@@ -74,8 +74,8 @@ function buildCharts(sample) {
   var otu_ids = firstinarray.otu_ids;
   var otu_labels = firstinarray.otu_labels;
   var sample_values = firstinarray.sample_values;
-  var frequency = parseFloat(firstinarray.wfreq);
-  console.log(frequency);
+ // var frequency = parseFloat(Wfreq);
+  var frequency = firstinarray.wfreq;
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
@@ -131,6 +131,9 @@ function buildCharts(sample) {
    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
 // Gauge Chart ----------------
+// First we need to get frequency - up there
+
+
 // 4. Create the trace for the gauge chart.
    var gaugeData = [ 
       {
