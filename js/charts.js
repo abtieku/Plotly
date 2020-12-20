@@ -61,27 +61,25 @@ function buildCharts(sample) {
     console.log(data);
 
     // 3. Create a variable that holds the samples array. AT
-  var samplesarray = data.samples;
+   var samplesarray = data.samples;
 
     // 4. Create a variable that holds an array that contains the data for the object that was chosen from the dropdown (sample) AT
-  var sampledata = samplesarray.filter(samplesobj => samplesobj.id == sample);
+   var sampledata = samplesarray.filter(samplesobj => samplesobj.id == sample);
  
     //  5. Create a variable that holds the first sample in the array. AT
-  var firstinarray = sampledata[0];
+   var firstinarray = sampledata[0];
 
     // 6. Create variables that have arrays for otu_ids, otu_labels, and sample_values. AT
     // adding in washing frequency
-  var otu_ids = firstinarray.otu_ids;
-  var otu_labels = firstinarray.otu_labels;
-  var sample_values = firstinarray.sample_values;
- // var frequency = parseFloat(Wfreq);
-  var frequency = firstinarray.wfreq;
+   var otu_ids = firstinarray.otu_ids;
+   var otu_labels = firstinarray.otu_labels;
+   var sample_values = firstinarray.sample_values;
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     // -------use slice, map, and reverse functions------
     // so the otu_ids with the most bacteria are last. AT
-  var yticks = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
+   var yticks = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
 
     // 8. Create the trace for the bar chart. AT
     // sample_values as the values, otu_ids as the labels, and otu_labels as the hover text
@@ -91,12 +89,14 @@ function buildCharts(sample) {
         text: otu_labels.slice(0, 10).reverse(),
         orientation: "h",
         //hovermode = otulabels,
+        marker: {color: 'rgb(0, 153, 0)'},
         type: "bar"
     }];
     // 9. Create the layout for the bar chart.  AT
     var barLayout = {
-        title: "Top 10 Bacteria Cultures Found",
-        margin: { t: 30, l: 150 }
+        title: "<b>Top 10 Bacteria Cultures Found</b>",
+        margin: { t: 30, l: 150 },
+        font: { color: "green"}
      
     };
     // 10. Use Plotly.newpPlot() to plot the data with the layout. AT
@@ -119,20 +119,32 @@ function buildCharts(sample) {
 
 // 2. Create the layout for the bubble chart.
    var bubbleLayout = {
-      title: "Bacteria Cultures Per Sample",
+      title: "<b>Bacteria Cultures Per Sample</b>",
       name: "OTU ID",
      // margin:  
       height: 500,
+      xaxis: {title: "<b>OTU ID</b>"},
       hovermode: otu_labels,
-      showlegend: false
+      showlegend: false,
+      font: { color: "green"}
 };
 
 // 3. Use Plotly to plot the data with the layout.
    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
 // Gauge Chart ----------------
-// First we need to get frequency - up there
+// 
+// 1. Create a variable that filters the metadata array for an object in the array whose id property matches
+// the ID number passed into buildCharts() function as the argument.
+var gaugeArray = data.metadata;
+var gaugedata = gaugeArray.filter(samplesobj => samplesobj.id == sample);
 
+// 2. Create a variable that holds the first sample in the array created
+var firstinarraygauge = gaugedata[0];
+
+// 3. Variable that contains converts the washing frequency to a floating point number
+var frequency = parseFloat(firstinarraygauge.wfreq);
+console.log(frequency);
 
 // 4. Create the trace for the gauge chart.
    var gaugeData = [ 
@@ -140,11 +152,9 @@ function buildCharts(sample) {
       value: frequency,
       type: "indicator",
       mode: "gauge+number",
-      //title: "Belly Button Washing Frequency",
-      title: { text: "Belly Button Washing Frequency"},
-      // subtitle: "Scrubs per Week",
+      title: { text: "<b>Belly Button Washing Frequency</b>"},
       gauge: {
-        axis: { range: [null, 10] },
+        axis: { range: [null, 10], tickwidth: 1},
         bar: { color: "black" },
         steps: [
           { range: [0, 2], color: "red"},
@@ -161,18 +171,10 @@ function buildCharts(sample) {
 
 // 5. Create the layout for the gauge chart.
    var gaugeLayout = { 
-      xaxis: {
-        tickmode: "linear",
-        tick0: 0,
-        dtick: 2
-      },
+      xaxis: { title: "Scrubs per Week"},  
       width: 450,
-      height: 600,
-      annotations: [{
-        text: "Scrubs per Week",
-        showarrow: false
-      }],
-      font: { color: "black"}
+      height: 450,
+      font: { color: "green"}
  
    };
 
