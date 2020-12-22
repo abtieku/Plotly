@@ -7,13 +7,13 @@ The components of this project are:
 
 - index.html
 
-- js\charts.js
+- js/charts.js
 
-- js\samples.json (input file)
+- js/data/samples.json (input file)
 
-- css\styleplotly.css
+- css/styleplotly.css
 
-- css\background3.jpg
+- css/background3.jpg
 
   
 
