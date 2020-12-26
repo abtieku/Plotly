@@ -9,7 +9,7 @@ The components of this project are:
 
 - js/charts.js
 
-- js/data/samples.json (input file)
+- js/samples.json (input file)
 
 - css/styleplotly.css
 
